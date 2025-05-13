@@ -1,0 +1,116 @@
+.users-online-bubble {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #007bff;
+  color: #fff;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 1.2em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.users-online-bubble:hover {
+  background: #0056b3;
+}
+
+.users-online-bubble .count {
+  background: #fff;
+  color: #007bff;
+  border-radius: 50%;
+  padding: 2px 8px;
+  font-weight: bold;
+  margin-left: 6px;
+  font-size: 0.95em;
+}
+
+.users-online-list {
+  position: fixed;
+  bottom: 80px;
+  right: 30px;
+  background: #fff;
+  color: #222;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  min-width: 180px;
+  max-width: 250px;
+  z-index: 2100;
+  padding: 0;
+  animation: fadeInUp 0.2s;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border-bottom: 1px solid #eee;
+  background: #f7f7f7;
+  border-radius: 10px 10px 0 0;
+}
+
+.users-online-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 10px 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.user-item {
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.user-item:last-child {
+  border-bottom: none;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-pseudo {
+  font-weight: bold;
+}
+
+.user-name {
+  font-size: 0.85em;
+  color: #666;
+}
+
+.header button {
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  color: #888;
+  cursor: pointer;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,19 @@
+
+<header class="header">
+  <div class="logo">CERISoNet</div>
+  <button 
+    *ngIf="isLoggedIn()" 
+    (click)="logout()" 
+    class="btn btn-danger" 
+    style="margin-left:auto;">
+    Déconnexion
+  </button>
+</header>
+<app-notification
+  *ngIf="message"
+  [message]="message"
+  [type]="messageType"
+  (notificationClosed)="handleNotificationClose()">
+</app-notification>
+
+<router-outlet></router-outlet>

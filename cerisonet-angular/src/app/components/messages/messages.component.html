@@ -1,0 +1,110 @@
+<div class="filter-sort-container">
+  <!-- Filtrer par hashtag -->
+  <div class="filter-section">
+    <label for="filter">Filtrer par hashtag :</label>
+    <input
+      id="filter"
+      type="text"
+      [(ngModel)]="filterHashtag"
+      placeholder="Entrez un hashtag"
+    />
+    <button (click)="applyFilter()">Appliquer</button>
+  </div>
+
+  <!-- Filtrer par propriétaire -->
+  <div class="filter-section">
+    <label for="ownerFilter">Filtrer par propriétaire :</label>
+    <select id="ownerFilter" [(ngModel)]="filterOwner" (change)="applyFilter()">
+      <option value="all">Tous</option>
+      <option value="me">Moi</option>
+      <option value="others">Les autres</option>
+    </select>
+  </div>
+
+  <!-- Trier les messages -->
+  <div class="sort-section">
+    <label for="sort">Trier par :</label>
+    <select id="sort" [(ngModel)]="sortCriteria" (change)="applySort()">
+      <option value="date">Date</option>
+      <option value="likes">Popularité (likes)</option>
+      <option value="owner">Propriétaire</option>
+    </select>
+  </div>
+</div>
+
+<div class="messages-container">
+  <!-- Afficher un message si aucun message n'est disponible -->
+  <div *ngIf="messages.length === 0" class="no-messages">
+    <p>Aucun message à afficher pour le moment.</p>
+  </div>
+
+  <!-- Afficher les messages filtrés -->
+  <div *ngFor="let message of filteredMessages" class="message-card">
+    <div class="message-header">
+      <img class="user-avatar" [src]="message.avatar || 'https://via.placeholder.com/50'" alt="Avatar" />
+      <div class="user-info">
+        <h5 class="user-name">{{ message.createdByName }}</h5>
+        <p class="message-date">{{ message.date }} à {{ message.hour }}</p>
+      </div>
+    </div>
+
+    <div class="message-body">
+      <p>{{ message.body }}</p>
+      <div class="hashtags">
+        <span *ngFor="let hashtag of message.hashtags" class="hashtag">{{ hashtag }}</span>
+      </div>
+      <img *ngIf="message.images?.url" [src]="message.images.url" [alt]="message.images.title" class="message-image" />
+    </div>
+
+    <div class="message-footer">
+      <div class="actions">
+        <button class="btn btn-like">❤️ Like</button>
+        <button class="btn btn-comment">💬 Commenter</button>
+        <button class="btn btn-share">🔄 Partager</button>
+      </div>
+    </div>
+
+    <!-- Section des commentaires améliorée -->
+    <div class="comments-section">
+      <h6>
+        <span class="comments-title">💬 Commentaires</span>
+        <span *ngIf="message.comments.length === 0" class="no-comments">Aucun commentaire</span>
+      </h6>
+      <ul *ngIf="message.comments.length > 0">
+        <li *ngFor="let comment of message.comments" class="comment">
+          <div class="comment-header">
+            <img class="comment-avatar" [src]="comment.commentedByAvatar || 'https://via.placeholder.com/30'" alt="Avatar" />
+            <span class="comment-user"><strong>{{ comment.commentedByName || 'Utilisateur inconnu' }}</strong></span>
+            <span class="comment-date">
+              {{ comment.date }} à {{ comment.hour }}
+            </span>
+          </div>
+          <div class="comment-body">
+            {{ comment.text }}
+          </div>
+        </li>
+      </ul>
+      <!-- Formulaire pour ajouter un commentaire -->
+      <form class="add-comment" (submit)="addComment(message._id); $event.preventDefault();">
+        <input
+          type="text"
+          [(ngModel)]="newCommentText[message._id]"
+          placeholder="Écrire un commentaire..."
+          class="comment-input"
+          name="comment-{{message._id}}"
+          autocomplete="off"
+        />
+        <button type="submit" class="btn btn-add-comment">Ajouter</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <button (click)="previousPage()" [disabled]="currentPage === 1" class="btn btn-pagination">Précédent</button>
+    <span>Page {{ currentPage }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="btn btn-pagination">Suivant</button>
+  </div>
+
+  <app-users-online></app-users-online>
+</div>
